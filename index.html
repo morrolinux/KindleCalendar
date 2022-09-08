@@ -8,10 +8,24 @@ body, html {
 	  margin: 0;
 }
 
-.bg {
+.cal {
 	/* The image used */
 	/* background-image: url("gcal.png"); */
 	background-image: url("gcal_timebar.png");
+
+	/* Full height */
+	height: 100%;
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+.screen {
+	/* The image used */
+	background-image: url("screenshot.png");
 
 	/* Full height */
 	height: 100%;
@@ -26,8 +40,7 @@ body, html {
 	</head>
 	<body>
 
-		<div class="bg"></div>
-
+		<div id="body" class="cal"></div>
 		<meta http-equiv="refresh" content="300" />
 		<script>
 			now = new Date(Date.now())
@@ -38,6 +51,22 @@ body, html {
 				setTimeout(function(){window.location.reload(1);}, 3600000);
 			}
 
+
+			// TAP to change view
+			index = 1;
+			className = ['cal','screen'];
+			
+			function updateIndex(){
+			    index = (index+1)%className.length;
+			    console.log(index);
+			}
+			
+			bodyObj = document.getElementById('body');
+
+			bodyObj.onclick = function(e){
+			    e.currentTarget.className = className[index];
+    			    updateIndex();
+			}
 		</script>
 	</body>
 </html>
