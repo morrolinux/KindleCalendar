@@ -13,6 +13,8 @@ import random
 import signal
 import sys
 from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 from io import BytesIO
 from datetime import datetime
 import time
@@ -116,14 +118,20 @@ try:
 		gcal = gcal.crop((0,0,758,gcal.size[1]))
 		Image.Image.paste(gcal, timebar)
 
-		# browser.save_screenshot('gcal.png')
+
+		dateoffsets = [140, 380, 610]
+
+		for i in range(3):
+			datestring = str(datetime.now().day+i) + "/" + str(datetime.now().month)
+			datemark = Image.new('RGBA', (100, 30), (255,255,255,0))
+			font = ImageFont.truetype('DejaVuSansMono-Bold', 32)
+			draw = ImageDraw.Draw(datemark)
+			draw.text((0, 0),datestring,(0,0,0),font=font)
+			Image.Image.paste(gcal, datemark, (dateoffsets[i],0))
 
 		gcal.save("gcal_timebar.png")
 
 		print("screenshot ok")
-
-
-		# browser.refresh()
         
 		time.sleep(120)
 finally:
