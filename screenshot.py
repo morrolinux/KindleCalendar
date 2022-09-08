@@ -16,7 +16,8 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from io import BytesIO
-from datetime import datetime
+from datetime import datetime, timedelta
+import locale
 import time
 import os
 
@@ -32,6 +33,8 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 
 # geckodriver_autoinstaller.install()
+
+locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
 
 profile = webdriver.FirefoxProfile(
     '/home/pi/.mozilla/firefox/u41lkvuj.default-esr/')
@@ -102,15 +105,15 @@ try:
 		timebar = timebar.crop((15,0,57,timebar.size[1]))
 
 		# move to the current day position (horizontal)
-		if datetime.now().strftime("%A") == "Monday": 
+		if datetime.now().strftime("%A") == "lunedì": 
 			browser.execute_script('document.body.style.MozTransformOrigin = "120px  700px";')
-		if datetime.now().strftime("%A") == "Tuesday": 
+		if datetime.now().strftime("%A") == "martedì": 
 			browser.execute_script('document.body.style.MozTransformOrigin = "580px  700px";')
-		if datetime.now().strftime("%A") == "Wednesday": 
+		if datetime.now().strftime("%A") == "mercoledì": 
 			browser.execute_script('document.body.style.MozTransformOrigin = "1060px 700px";')
-		if datetime.now().strftime("%A") == "Thursday": 
+		if datetime.now().strftime("%A") == "giovedì": 
 			browser.execute_script('document.body.style.MozTransformOrigin = "1540px 700px";')
-		if datetime.now().strftime("%A") in ["Friday", "Saturday", "Sunday"]:
+		if datetime.now().strftime("%A") in ["venerdì", "sabato", "domenica"]:
 			browser.execute_script('document.body.style.MozTransformOrigin = "2020px 700px";')
 
 		# take a screenshot of google calendar, crop it to screen size and overlay the time bar
@@ -119,12 +122,14 @@ try:
 		Image.Image.paste(gcal, timebar)
 
 
-		dateoffsets = [140, 380, 610]
+		dateoffsets = [130, 370, 600]
 
 		for i in range(3):
-			datestring = str(datetime.now().day+i) + "/" + str(datetime.now().month)
+			# datestring = str(datetime.now().day+i) + "/" + str(datetime.now().month)
+			dt = datetime.now()+timedelta(days=i)
+			datestring = dt.strftime("%A")[:3] + " " + str(dt.day)
 			datemark = Image.new('RGBA', (100, 30), (255,255,255,0))
-			font = ImageFont.truetype('DejaVuSansMono-Bold', 32)
+			font = ImageFont.truetype('DejaVuSansMono-Bold', 26)
 			draw = ImageDraw.Draw(datemark)
 			draw.text((0, 0),datestring,(0,0,0),font=font)
 			Image.Image.paste(gcal, datemark, (dateoffsets[i],0))
