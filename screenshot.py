@@ -138,6 +138,6 @@ try:
 
 		print("screenshot ok")
 
-		time.sleep(120)
+		time.sleep(300)
 finally:
 	browser.quit()
