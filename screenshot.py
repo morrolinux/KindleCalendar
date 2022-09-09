@@ -71,7 +71,7 @@ try:
 
 	while True:
 
-		if (datetime.now().hour < 8) or (datetime.now().hour > 20):
+		if (datetime.now().hour < 8) or (datetime.now().hour > 21):
 			time.sleep(60*30)
 			os.system("sudo poweroff")
 			continue
