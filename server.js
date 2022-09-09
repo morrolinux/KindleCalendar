@@ -5,13 +5,19 @@ const WsHixie = require('ws-plus-hixie');
 filewatcher = require('filewatcher');
 
 const server = http.createServer((request, response) => {
-    const url = request.url;
+    url = request.url;
+
+    if(url.indexOf("?") > 0)
+        url = url.substring(0, url.indexOf("?"));
+
     console.log("URL: " + url);
 
     if(!fs.existsSync('.' + url)) {
         console.log("ERROR: NOT FOUND: " + url);
         return;
     }
+
+
 
     if (url === '/' || url === '/index.html') {
         response.setHeader('Content-Type', 'text/html');
@@ -43,15 +49,23 @@ server.on("error", error => {
 });
 
 server.on("request", request => {
-    console.log("New Connection...");
+    console.log("New request");
 });
+
 
 // Start watching directory..
 const watcher = filewatcher();
-watcher.add("./");
-watcher.on("change", function(folder, stat) {
-    console.log("file change:", folder, stat);
-    sendMessage("bg", "screen");
+watchFiles = ["./screenshot.png", "./gcal.png"];
+for(const url of watchFiles){
+    if(!fs.existsSync(url)) {
+        console.log(url, "NOT FOUND, creating... ");
+        fs.closeSync(fs.openSync(url, 'w'));
+    }
+    watcher.add(url);
+}
+
+watcher.on("change", function(filename, stat) {
+    sendMessage("bg", filename.substring(2));
 });
 
 server.listen(PORT);

@@ -1,15 +1,27 @@
 const COLOR_OK = "#1f7f39";
 const COLOR_ERROR = "#c43131";
 
+
+var active = false;
+var currentView = 1;
+var fileNames = ['gcal.png', 'screenshot.png'];
+
+
 const setMessage = function(message) {
     body.innerHTML = message;
 };
 
-const updateBG = function(className) {
-	body.className = className;
+const updateBG = function(fileName) {
+	now = new Date().getTime();
+	// setMessage("Received: " + fileName + " " + now);
+	body.style.backgroundImage = "url('http://" + window.location.hostname + ":8080/"+ fileName +"?" + now +"')";
 };
 
-var active = false;
+function updatecurrentView(){
+	currentView = (currentView+1)%fileNames.length;
+	console.log(currentView);
+};
+
 
 const startListener = function() {
     if (active)
@@ -29,18 +41,33 @@ const startListener = function() {
 		setMessage("ERROR " + code + e, COLOR_ERROR);
     }
     wsConn.onmessage = function(message) {
+		//console.log("onMessage", message);
 		try {
 			var data = JSON.parse(message.data);
+
 			setMessage(data.msj);
 
 			if(data.sc === "bg") {
-				updateBG(data.msj);
+				// pinned content takes over calendar refresh until page reload
+				if(data.msj === "gcal.png" && fileNames[currentView] !== data.msj)
+					return;
+				currentView = fileNames.indexOf(data.msj);
+				updateBG(fileNames[currentView]);
 			}
 
 		} catch(e) {
-			setMessage("MSG ERROR", COLOR_ERROR);
+			setMessage("MSG ERROR: " + e, COLOR_ERROR);
 		}
     }
-}
+};
+
+
+// TAP to change view
+body.onclick = function(e){
+	now = new Date().getTime();
+	// e.currentTarget.className = "cal";
+	e.currentTarget.style.backgroundImage = "url('http://" + window.location.hostname + ":8080/"+ fileNames[currentView] +"?" + now +"')";
+	updatecurrentView();
+};
 
 startListener();
