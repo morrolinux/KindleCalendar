@@ -77,7 +77,7 @@ try:
 			continue
 
 		# i = (i+1) % 12
-		i = i+1 
+		i = i+1
 
 		# refresh page every 60 minutes
 		if (i%60) == 0:
@@ -105,13 +105,13 @@ try:
 		timebar = timebar.crop((15,0,57,timebar.size[1]))
 
 		# move to the current day position (horizontal)
-		if datetime.now().strftime("%A") == "lunedì": 
+		if datetime.now().strftime("%A") == "lunedì":
 			browser.execute_script('document.body.style.MozTransformOrigin = "120px  700px";')
-		if datetime.now().strftime("%A") == "martedì": 
+		if datetime.now().strftime("%A") == "martedì":
 			browser.execute_script('document.body.style.MozTransformOrigin = "580px  700px";')
-		if datetime.now().strftime("%A") == "mercoledì": 
+		if datetime.now().strftime("%A") == "mercoledì":
 			browser.execute_script('document.body.style.MozTransformOrigin = "1060px 700px";')
-		if datetime.now().strftime("%A") == "giovedì": 
+		if datetime.now().strftime("%A") == "giovedì":
 			browser.execute_script('document.body.style.MozTransformOrigin = "1540px 700px";')
 		if datetime.now().strftime("%A") in ["venerdì", "sabato", "domenica"]:
 			browser.execute_script('document.body.style.MozTransformOrigin = "2020px 700px";')
@@ -134,10 +134,10 @@ try:
 			draw.text((0, 0),datestring,(0,0,0),font=font)
 			Image.Image.paste(gcal, datemark, (dateoffsets[i],0))
 
-		gcal.save("gcal_timebar.png")
+		gcal.save("gcal.png")
 
 		print("screenshot ok")
-        
+
 		time.sleep(120)
 finally:
 	browser.quit()

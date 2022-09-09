@@ -11,7 +11,7 @@ body, html {
 .cal {
 	/* The image used */
 	/* background-image: url("gcal.png"); */
-	background-image: url("gcal_timebar.png");
+	background-image: url("gcal.png");
 
 	/* Full height */
 	height: 100%;
@@ -55,12 +55,12 @@ body, html {
 			// TAP to change view
 			index = 1;
 			className = ['cal','screen'];
-			
+
 			function updateIndex(){
 			    index = (index+1)%className.length;
 			    console.log(index);
 			}
-			
+
 			bodyObj = document.getElementById('body');
 
 			bodyObj.onclick = function(e){
@@ -68,6 +68,9 @@ body, html {
     			    updateIndex();
 			}
 		</script>
+
+		<script src="client.js"></script>
+
 	</body>
 </html>
 
