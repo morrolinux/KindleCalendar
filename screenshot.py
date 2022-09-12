@@ -80,19 +80,19 @@ try:
 		i = i+1
 
 		# refresh page every 60 minutes
-		if (i%60) == 0:
+		if (i%10) == 0:
 			print("refresh page...")
 			browser.get("https://calendar.google.com")
 			# browser.refresh()
-			time.sleep(15 + random.randrange(0,5))
-			# browser.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[1]/header/div[2]/div[1]/div[1]").click()
+			time.sleep(20 + random.randrange(0,5))
+			# browseR.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[1]/header/div[2]/div[1]/div[1]").click()
 
 			# zoom in the right amount
 			browser.execute_script("document.body.style.MozTransform='scale(1.5)';")
 
 
 		print("preparing to take a new screenshot...")
-		if (i%30) == 0:
+		if (i%5) == 0:
 			try:
 				actions.perform()
 			except Exception as e:
@@ -121,12 +121,18 @@ try:
 		gcal = gcal.crop((0,0,758,gcal.size[1]))
 		Image.Image.paste(gcal, timebar)
 
-
 		dateoffsets = [130, 370, 600]
 
-		for i in range(3):
+		if datetime.now().strftime("%A") == "sabato":
+			daysrange = [-1, 0, 1]
+		elif datetime.now().strftime("%A") == "domenica":
+			daysrange = [-2, -1, 0]
+		else:
+			daysrange = [0, 1, 2]
+
+		for i, idx in enumerate(daysrange):
 			# datestring = str(datetime.now().day+i) + "/" + str(datetime.now().month)
-			dt = datetime.now()+timedelta(days=i)
+			dt = datetime.now()+timedelta(days=idx)
 			datestring = dt.strftime("%A")[:3] + " " + str(dt.day)
 			datemark = Image.new('RGBA', (100, 30), (255,255,255,0))
 			font = ImageFont.truetype('DejaVuSansMono-Bold', 26)
@@ -138,6 +144,6 @@ try:
 
 		print("screenshot ok")
 
-		time.sleep(300)
+		time.sleep(360)
 finally:
 	browser.quit()
