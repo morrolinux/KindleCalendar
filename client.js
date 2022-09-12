@@ -3,7 +3,7 @@ const COLOR_ERROR = "#c43131";
 
 
 var active = false;
-var currentView = 1;
+var currentView = 0;
 var fileNames = ['gcal.png', 'screenshot.png'];
 
 
@@ -11,15 +11,14 @@ const setMessage = function(message) {
     body.innerHTML = message;
 };
 
-const updateBG = function(fileName) {
+const setBG = function(fileName) {
 	now = new Date().getTime();
-	// setMessage("Received: " + fileName + " " + now);
 	body.style.backgroundImage = "url('http://" + window.location.hostname + ":8080/"+ fileName +"?" + now +"')";
 };
 
-function updatecurrentView(){
+function cycleCurrentView(){
 	currentView = (currentView+1)%fileNames.length;
-	console.log(currentView);
+	setBG(fileNames[currentView]);
 };
 
 
@@ -41,10 +40,9 @@ const startListener = function() {
 		setMessage("ERROR " + code + e, COLOR_ERROR);
     }
     wsConn.onmessage = function(message) {
-		//console.log("onMessage", message);
+		// console.log("onMessage", message);
 		try {
 			var data = JSON.parse(message.data);
-
 			setMessage(data.msj);
 
 			if(data.sc === "bg") {
@@ -52,7 +50,7 @@ const startListener = function() {
 				if(data.msj === "gcal.png" && fileNames[currentView] !== data.msj)
 					return;
 				currentView = fileNames.indexOf(data.msj);
-				updateBG(fileNames[currentView]);
+				setBG(fileNames[currentView]);
 			}
 
 		} catch(e) {
@@ -64,10 +62,7 @@ const startListener = function() {
 
 // TAP to change view
 body.onclick = function(e){
-	now = new Date().getTime();
-	// e.currentTarget.className = "cal";
-	e.currentTarget.style.backgroundImage = "url('http://" + window.location.hostname + ":8080/"+ fileNames[currentView] +"?" + now +"')";
-	updatecurrentView();
+	cycleCurrentView();
 };
 
 startListener();

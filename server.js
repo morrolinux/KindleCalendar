@@ -65,6 +65,8 @@ for(const url of watchFiles){
 }
 
 watcher.on("change", function(filename, stat) {
+    if(stat.blocks < 1 || stat.size < 1) return;
+    console.log("onChange:", filename, stat);
     sendMessage("bg", filename.substring(2));
 });
 
