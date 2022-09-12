@@ -64,10 +64,15 @@ for(const url of watchFiles){
     watcher.add(url);
 }
 
+var last = Date.now();
+
 watcher.on("change", function(filename, stat) {
     if(stat.blocks < 1 || stat.size < 1) return;
+    var now = Date.now();
+    if(now-last < 1000) return;	    // file watcher flood protection
     console.log("onChange:", filename, stat);
     sendMessage("bg", filename.substring(2));
+    last = now;
 });
 
 server.listen(PORT);
