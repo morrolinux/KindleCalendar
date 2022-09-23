@@ -58,6 +58,11 @@ browser = webdriver.Firefox(firefox_profile=profile,
                            desired_capabilities=desired,
                            options=opts)
 
+
+def night():
+    return (datetime.now().hour < 8) or (datetime.now().hour > 21)
+
+
 try:
 	i = -1
 	actions = ActionChains(browser)
@@ -71,16 +76,10 @@ try:
 
 	while True:
 
-		if (datetime.now().hour < 8) or (datetime.now().hour > 21):
-			time.sleep(60*30)
-			os.system("sudo poweroff")
-			continue
-
-		# i = (i+1) % 12
 		i = i+1
 
 		# refresh page every 60 minutes
-		if (i%10) == 0:
+		if (i%6) == 0:
 			print("refresh page...")
 			browser.get("https://calendar.google.com")
 			# browser.refresh()
@@ -92,7 +91,7 @@ try:
 
 
 		print("preparing to take a new screenshot...")
-		if (i%5) == 0:
+		if (i%3) == 0:
 			try:
 				actions.perform()
 			except Exception as e:
@@ -138,12 +137,19 @@ try:
 			font = ImageFont.truetype('DejaVuSansMono-Bold', 26)
 			draw = ImageDraw.Draw(datemark)
 			draw.text((0, 0),datestring,(0,0,0),font=font)
-			Image.Image.paste(gcal, datemark, (dateoffsets[i],0))
+			Image.Image.paste(gcal, datemark, (dateoffsets[i],0), datemark)
+
+		if night():
+			moon = Image.open("moon.png")
+			Image.Image.paste(gcal, moon, (int(gcal.width/2-moon.width/2), int(gcal.height/2-moon.height/2)), moon)
 
 		gcal.save("gcal.png")
-
 		print("screenshot ok")
 
-		time.sleep(360)
+		if night():
+			time.sleep(60*60)
+		else:
+			time.sleep(600)
+
 finally:
 	browser.quit()
