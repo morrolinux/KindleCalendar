@@ -3,7 +3,7 @@ Description=Google Calendar screenshot service
 
 [Service]
 Environment=XDG_RUNTIME_DIR=/run/user/1000
-WorkingDirectory=/home/pi/GCAL
+WorkingDirectory=/home/pi/KindleCalendar
 ExecStart=python3 screenshot.py
 Restart=on-failure
 RestartSec=60s
