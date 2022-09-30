@@ -12,7 +12,8 @@ Selenium automation to screenshot your calendar and view it on the Kindle browse
 6. Visit Google Calendar just to make sure it loads correctly
 7. Install the selenium webdriver for firefox: [instructions here](https://firefox-source-docs.mozilla.org/testing/geckodriver/ARM.html)
 8. Edit `KindleCalendar/screenshot.py` and set your Firefox profile path under `profile = webdriver.FirefoxProfile(...`
-9. Reboot
+9. Install nodejs and npm `sudo apt install nodejs npm`
+10. Install project dependencies with npm: `cd KindleCalendar && npm install ws-plus-hixie filewatcher`
 
 If everything went fine, you should be able to visit your Pi's IP address on port 8080 with any browser including Kindle, but make sure Javascript is enabled in browser settings.
 
