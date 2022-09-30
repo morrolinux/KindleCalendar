@@ -36,6 +36,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
 
+# CHANGE THIS TO YOUR MOZILLA PROFILE PATH
 profile = webdriver.FirefoxProfile(
     '/home/pi/.mozilla/firefox/u41lkvuj.default-esr/')
 
