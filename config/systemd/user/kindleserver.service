@@ -1,0 +1,13 @@
+[Unit]
+Description=Google Calendar webserver service
+
+[Service]
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+WorkingDirectory=/home/pi/KindleCalendar
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=default.target
+

@@ -1,2 +1,0 @@
-@reboot bash /home/pi/KindleCalendar/run.sh
-
