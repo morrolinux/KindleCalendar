@@ -24,7 +24,7 @@ import os
 
 def signal_handler(sig, frame):
 	global browser
-	print('You pressed Ctrl+C!')
+	print("You pressed Ctrl+C!")
 	browser.close()
 	sys.exit(0)
 
@@ -34,15 +34,15 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 # geckodriver_autoinstaller.install()
 
-locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
+locale.setlocale(locale.LC_TIME, "it_IT.UTF-8")
 
 # CHANGE THIS TO YOUR MOZILLA PROFILE PATH
 profile = webdriver.FirefoxProfile(
-    '/home/pi/.mozilla/firefox/u41lkvuj.default-esr/')
+    "/home/pi/.mozilla/firefox/u41lkvuj.default-esr/")
 
 profile.set_preference("dom.webdriver.enabled", False)
-profile.set_preference('useAutomationExtension', False)
-profile.set_preference('font.size.systemFontScale', 150)
+profile.set_preference("useAutomationExtension", False)
+profile.set_preference("font.size.systemFontScale", 150)
 profile.update_preferences()
 desired = DesiredCapabilities.FIREFOX
 
@@ -67,8 +67,8 @@ def night():
 try:
 	i = -1
 	actions = ActionChains(browser)
-	# actions.send_keys('d')	# daily view
-	actions.send_keys('t')	# goto: now
+	# actions.send_keys("d")	# daily view
+	actions.send_keys("t")	# goto: now
 
 	# browser.get("https://calendar.google.com")
 	# time.sleep(20)
@@ -99,22 +99,22 @@ try:
 				print(e)
 
 		# take a screenshot of the time bar
-		browser.execute_script('document.body.style.MozTransformOrigin = "left 700px";')
+		browser.execute_script("document.body.style.MozTransformOrigin = 'left 700px';")
 		timebar = Image.open(BytesIO(browser.get_screenshot_as_png()))
 		# timebar = timebar.crop((25,0,90,timebar.size[1]))
 		timebar = timebar.crop((15,0,57,timebar.size[1]))
 
 		# move to the current day position (horizontal)
 		if datetime.now().strftime("%A") == "lunedì":
-			browser.execute_script('document.body.style.MozTransformOrigin = "120px  700px";')
+			browser.execute_script("document.body.style.MozTransformOrigin = '120px  700px';")
 		if datetime.now().strftime("%A") == "martedì":
-			browser.execute_script('document.body.style.MozTransformOrigin = "580px  700px";')
+			browser.execute_script("document.body.style.MozTransformOrigin = '580px  700px';")
 		if datetime.now().strftime("%A") == "mercoledì":
-			browser.execute_script('document.body.style.MozTransformOrigin = "1060px 700px";')
+			browser.execute_script("document.body.style.MozTransformOrigin = '1060px 700px';")
 		if datetime.now().strftime("%A") == "giovedì":
-			browser.execute_script('document.body.style.MozTransformOrigin = "1540px 700px";')
+			browser.execute_script("document.body.style.MozTransformOrigin = '1540px 700px';")
 		if datetime.now().strftime("%A") in ["venerdì", "sabato", "domenica"]:
-			browser.execute_script('document.body.style.MozTransformOrigin = "2020px 700px";')
+			browser.execute_script("document.body.style.MozTransformOrigin = '2020px 700px';")
 
 		# take a screenshot of google calendar, crop it to screen size and overlay the time bar
 		gcal = Image.open(BytesIO(browser.get_screenshot_as_png()))
@@ -134,8 +134,8 @@ try:
 			# datestring = str(datetime.now().day+i) + "/" + str(datetime.now().month)
 			dt = datetime.now()+timedelta(days=idx)
 			datestring = dt.strftime("%A")[:3] + " " + str(dt.day)
-			datemark = Image.new('RGBA', (100, 30), (255,255,255,0))
-			font = ImageFont.truetype('DejaVuSansMono-Bold', 26)
+			datemark = Image.new("RGBA", (100, 30), (255,255,255,0))
+			font = ImageFont.truetype("DejaVuSansMono-Bold", 26)
 			draw = ImageDraw.Draw(datemark)
 			draw.text((0, 0),datestring,(0,0,0),font=font)
 			Image.Image.paste(gcal, datemark, (dateoffsets[i],0), datemark)
