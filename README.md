@@ -6,14 +6,15 @@ Selenium automation to screenshot your calendar and view it on the Kindle browse
 # How to get started
 1. log in to your Pi (or whatever device you want to use)
 2. Clone this repo: `git clone https://github.com/morrolinux/KindleCalendar.git`
-3. Install systemd user services: `cp KindleCalendar/config/systemd/user/* .config/systemd/user/`
-4. Enable systemd services: `systemctl --user daemon-reload && systemctl --user enable kindleserver && systemctl --user enable screenshot`
-5. Install Firefox and login with your google account
-6. Visit Google Calendar just to make sure it loads correctly
-7. Install the selenium webdriver for firefox: [instructions here](https://firefox-source-docs.mozilla.org/testing/geckodriver/ARM.html)
-8. Edit `KindleCalendar/screenshot.py` and set your Firefox profile path under `profile = webdriver.FirefoxProfile(...`
-9. Install nodejs and npm `sudo apt install nodejs npm`
-10. Install project dependencies with npm: `cd KindleCalendar && npm i`
+3. Install python dependencies: `cd KindleCalendar && pip install -r requirements.txt`
+4. Install systemd user services: `cp KindleCalendar/config/systemd/user/* .config/systemd/user/`
+5. Enable systemd services: `systemctl --user daemon-reload && systemctl --user enable kindleserver && systemctl --user enable screenshot`
+6. Install Firefox and login with your google account
+7. Visit Google Calendar just to make sure it loads correctly
+8. Install the selenium webdriver for firefox: [instructions here](https://firefox-source-docs.mozilla.org/testing/geckodriver/ARM.html)
+9. Edit `KindleCalendar/screenshot.py` and set your Firefox profile path under `profile = webdriver.FirefoxProfile(...`
+10. Install nodejs and npm `sudo apt install nodejs npm`
+11. Install project dependencies with npm: `cd KindleCalendar && npm i`
 
 If everything went fine, you should be able to visit your Pi's IP address on port 8080 with any browser including Kindle, but make sure Javascript is enabled in browser settings.
 
