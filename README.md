@@ -6,7 +6,7 @@ Selenium automation to screenshot your calendar and view it on the Kindle browse
 # How to get started
 1. log in to your Pi (or whatever device you want to use)
 2. Clone this repo: `git clone https://github.com/morrolinux/KindleCalendar.git`
-3. Install python dependencies: `cd KindleCalendar && pip install -r requirements.txt`
+3. Install python dependencies: `cd KindleCalendar && pip install -r requirements.txt && cd ..`
 4. Install systemd user services: `cp KindleCalendar/config/systemd/user/* .config/systemd/user/`
 5. Enable systemd services: `systemctl --user daemon-reload && systemctl --user enable kindleserver && systemctl --user enable screenshot`
 6. Install Firefox and login with your google account
