@@ -79,13 +79,19 @@ try:
 
 		i = i+1
 
+		if night():
+			gcal = Image.new("RGBA", (758, 1048), (255,255,255,255))
+			gcal.save("gcal.png")
+			time.sleep(60*60)
+			continue
+
 		# refresh page every 60 minutes
 		if (i%6) == 0:
 			print("refresh page...")
 			browser.get("https://calendar.google.com")
 			# browser.refresh()
 			time.sleep(20 + random.randrange(0,5))
-			# browseR.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[1]/header/div[2]/div[1]/div[1]").click()
+			# browser.find_element(By.XPATH, "/html/body/div[2]/div[1]/div[1]/header/div[2]/div[1]/div[1]").click()
 
 			# zoom in the right amount
 			browser.execute_script("document.body.style.MozTransform='scale(1.5)';")
@@ -140,17 +146,14 @@ try:
 			draw.text((0, 0),datestring,(0,0,0),font=font)
 			Image.Image.paste(gcal, datemark, (dateoffsets[i],0), datemark)
 
-		if night():
-			moon = Image.open("moon.png")
-			Image.Image.paste(gcal, moon, (int(gcal.width/2-moon.width/2), int(gcal.height/2-moon.height/2)), moon)
+		# if night():
+		# 	moon = Image.open("moon.png")
+		# 	Image.Image.paste(gcal, moon, (int(gcal.width/2-moon.width/2), int(gcal.height/2-moon.height/2)), moon)
 
 		gcal.save("gcal.png")
 		print("screenshot ok")
 
-		if night():
-			time.sleep(60*60)
-		else:
-			time.sleep(600)
+		time.sleep(600)
 
 finally:
 	browser.quit()
