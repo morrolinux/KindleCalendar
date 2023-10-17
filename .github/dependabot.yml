@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "all" # Controlla tutti gli ecosistemi (npm, ruby, python, ecc.)
+    directory: "/" # Ricerca in tutte le cartelle del repository
+    schedule:
+      interval: "daily" # Controlla gli aggiornamenti ogni giorno
