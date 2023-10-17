@@ -1,16 +1,5 @@
 # Security Policy
 
-## Supported Versions
-
-This section provides information about which versions of the "KindleCalendar" project are currently supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
-
 ## Reporting a Vulnerability
 
 To report a security vulnerability, please follow these steps:
@@ -38,12 +27,6 @@ After reporting a vulnerability, here's what you can expect:
 - You will receive periodic updates on the status of the vulnerability.
 
 - Once resolved, the vulnerability will be closed and made public, usually with a reference to the issue.
-
-### Release Policy
-
-The project aims to release security updates for supported versions as quickly as possible. The severity of the vulnerability may affect response times.
-
-Versions that are no longer supported will not receive security updates. Therefore, users are strongly advised to update to supported versions to ensure the security of their systems.
 
 Please follow the security policy and collaborate with the project team to ensure that vulnerabilities are handled appropriately.
 
