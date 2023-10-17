@@ -6,8 +6,6 @@
 
 KindleCalendar is a tool that utilizes Selenium automation to capture screenshots of your online calendar, making it accessible on your Kindle device's web browser. This project simplifies the process of viewing your calendar without the need for syncing with an external service.
 
-**Note:** This project was last updated on October 18, 2022, and addressed a potential vulnerability in the code.
-
 ## Getting Started 🚀
 
 To get started:
